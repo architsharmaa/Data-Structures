@@ -1,0 +1,97 @@
+#include <stdio.h> // standard input out put library
+#include <stdlib.h>
+
+
+struct node //structure defining the structure or the values of the node
+{
+    int data; // data type example to hold info
+    struct node *link; //self referential pointer to form  the next link or the copy of the present
+};
+struct node *insert(struct node *start,int item) // insertion function with parameter equal to the value to be inserted
+{
+    struct node *temp;   //new pointer reference to form a new node
+    temp = (struct node *)malloc(sizeof(struct node)); //allocation of the memory to the new node temp
+    temp->data= item; // storing the value of the item variable in the data part of the node
+     if(start == NULL) // only start pointer will be move in case when the stack is empty
+     {
+        temp->link =start; // setting the last pointer of the stack to the null
+        start= temp ; // updating the start pointer
+        return start;
+     }
+     struct node *p = start; //flag node to move the pointer the queue
+     while(p->link!=NULL) //while loop to iterate the pointer to the last
+        p= p->link; //iterative statement for the pointer
+      temp->link = p->link; // defining the pointer value for the last variable
+      p->link =temp;  // setting the the address for the temp variable in second last node
+     return start;
+}
+struct   node *del(struct node *start) // function deletes the values or removes the queue
+{
+    int item ; // deleted item to be displayed
+    if(start==NULL) // checks if the stack is already empty
+    {
+        printf("Already Empty");
+    }
+     struct node *temp; //temp node that can be deleted
+     struct node *p =start; //it is the counter variable
+     while(p->link!=NULL)
+     {
+         p=p->link;
+     }
+     p->link = temp;
+     free(temp);
+
+}
+int peek(struct node *start) // shows the first element in the stack
+{
+    if(start= NULL) // checks if the stack is empty or not
+    {
+        printf("Under flow");
+        exit(1); // exists the code of it is underflow
+    }
+    return (start->data); // return the q front value
+}
+struct node *display(struct node *start) // displays the entire queue
+{
+    struct node *p = start; //reference pointer node
+    while(p!=NULL) //loop to traverse the pointer till the end
+    {
+        printf("%d \n",p->data); //printing statement
+        p= p->link;              //iterative statement for the pointer
+    }
+    return start;
+}
+
+int main() //main function
+{
+    struct node *start= NULL; //starting pointer reference;
+    int  choice, item ;//variables for menu driven choice and values to be inserted
+    while(1) // while loop for infinite
+    {
+        printf("1. Insert \n");
+        printf("2. Delete \n");
+        printf("3. Display the elemnts in front \n");      // menu driven program
+        printf("4. Display all \n");
+        printf("5. Quit \n");
+        printf("Enter the choice \n");
+        scanf ("%d",&choice);
+        switch(choice) // switch case
+        {
+            case 1 : printf("Input the elements to added in queue");
+                     scanf("%d",&item);
+                    start = insert(start,item); // insert function calling
+                     break;
+            case 2 : item = (start=del(start)); // delete function calling
+                     printf("The element to deleted is %d",item);
+                     break;
+            case 3 : printf("The element in the front is %d",peek(start)); //peek function calling
+                     break;
+            case 4 : start = display(start); //display function calling
+                     break;
+            case 5 : exit(1); // exits the program
+                     break ;
+            default : printf("Wrong Choice"); //default value
+        }
+    }
+    return ;
+}

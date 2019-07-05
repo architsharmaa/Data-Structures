@@ -1,0 +1,87 @@
+#include <stdio.h> // standard input out put library
+#include <stdlib.h>
+#define max 5 // Macro keeping value of max variable constant throughout
+
+int queue_arr[max]; // name of the array
+int rear = -1; // value for the rear pointer
+int front =-1; //value for the front pointer
+
+void insert(int item) // insertion function with parameter equal to the value to be inserted
+{
+     if(rear==max-1) //checks if the queue is already full or not
+     {
+         printf("Overflow ");
+     }
+     if(front == -1) // only front pointer will be moved in case when the queue is empty
+     {
+         front =0 ;
+     }
+     rear = rear +1; // moves the rear pointer forward as insertion is from back
+     queue_arr[rear]= item ; // inserts the item value into array
+}
+int del() // function deletes the values or removes the queue
+{
+    int item ; // deleted item to be displayed
+    if(front == -1|| front == rear+1) // checks if the queue is already empty
+    {
+        printf("Already Empty");
+    }
+     item = queue_arr[front]; // deletion is front front
+     front = front +1; // front pointer to move forward
+    return item ; // return the values of the item
+}
+int peek() // shows the first element in the queue
+{
+    if(front == rear == -1) // checks if the queue is empty or not
+    {
+        printf("Under flow");
+        exit(1); // exists the code of it is underflow
+    }
+    return queue_arr[front]; // return the queue front value
+}
+void display() // displays the entire queue
+{
+    int i; //variable
+    if(front ==rear == -1) //checks whether the queue is empty
+    {
+        printf("underflow");
+        return ;  // exists the loop if it is empty
+    }
+    for(i=front;i<= rear;i++) // loop to print the values
+    {
+        printf("%d \n",queue_arr[i]); // printing statement
+    }
+}
+
+int main() //main function
+{
+    int  choice, item ;//variables for menu driven choice and values to be inserted
+    while(1) // while loop for infinite
+    {
+        printf("1. Insert \n");
+        printf("2. Delete \n");
+        printf("3. Display the elemnts in front \n");      // menu driven program
+        printf("4. Display all \n");
+        printf("5. Quit \n");
+        printf("Enter the choice \n");
+        scanf ("%d",&choice);
+        switch(choice) // switch case
+        {
+            case 1 : printf("Input the elements to added in queue");
+                     scanf("%d",&item);
+                     insert(item); // insert function calling
+                     break;
+            case 2 : item = del(); // delete function calling
+                     printf("The element to deleted is %d",item);
+                     break;
+            case 3 : printf("The element in the front is %d",peek()); //peek function calling
+                     break;
+            case 4 : display(); //display function calling
+                     break;
+            case 5 : exit(1); // exits the program
+                     break ;
+            default : printf("Wrong Choice"); //default value
+        }
+    }
+    return ;
+}
