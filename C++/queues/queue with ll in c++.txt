@@ -1,0 +1,93 @@
+#include <bits/stdc++.h> //library fir c++ library
+using namespace std; //std inserts
+
+
+struct node //structure defining the structure or the values of the node
+{
+    int data; // data type example to hold info
+    struct node *link; //self referential pointer to form  the next link or the copy of the present
+};
+struct node *insert(struct node *start,int item) // insertion function with parameter equal to the value to be inserted
+{
+    struct node *temp;   //new pointer reference to form a new node
+    temp = new node; //allocation of the memory to the new node temp
+    temp->data= item; // storing the value of the item variable in the data part of the node
+     if(start == NULL) // only start pointer will be move in case when the queue is empty
+     {
+        temp->link =start; // setting the last pointer of the queue to the null
+        start= temp ; // updating the start pointer
+        return start;
+     }
+     struct node *p = start; //flag node to move the pointer the queue
+     while(p->link!=NULL) //while loop to iterate the pointer to the last
+        p= p->link; //iterative statement for the pointer
+      temp->link = p->link; // defining the pointer value for the last variable
+      p->link =temp;  // setting the the address for the temp variable in second last node
+     return start;
+}
+   int del(struct node *start) // function deletes the values or removes the queue
+{
+    int item ; // deleted item to be displayed
+    if(start==NULL) // checks if the queue is already empty
+    {
+        cout<<"Already Empty";
+    }
+     struct node *temp= start; //temp node that can be deleted
+     item = temp->data; // stores the values of the deleted node in the variable item
+     start = start->link; //changes the address of the first variable to second so the address of the en0ire list is not lost
+     free(temp); //releases the memory from the system
+     return item ; //returns the value
+}
+int peek(struct node *start) // shows the first element in the queue
+{
+    if(start== NULL) // checks if the queue is empty or not
+    {
+        cout<<"Under flow";
+        exit(1); // exists the code of it is underflow
+    }
+    return (start->data); // return the queue front value
+}
+struct node *display(struct node *start) // displays the entire queue
+{
+    struct node *p = start; //reference pointer node
+    while(p!=NULL) //loop to traverse the pointer till the end
+    {
+        cout<<(p->data)<<endl; //printing statement
+        p= p->link;              //iterative statement for the pointer
+    }
+    return start;
+}
+
+int main() //main function
+{
+    struct node *start= NULL; //starting pointer reference;
+    int  choice, item ;//variables for menu driven choice and values to be inserted
+    while(1) // while loop for infinite
+    {
+        cout<<"1. Insert \n";
+        cout<<"2. Delete \n";
+        cout<<"3. Display the elemnts in front \n";      // menu driven program
+        cout<<"4. Display all \n";
+        cout<<"5. Quit \n";
+        cout<<"Enter the choice \n";
+        cin>>choice;
+        switch(choice) // switch case
+        {
+            case 1 : cout<<"Input the elements to added in queue";
+                     cin>>item;
+                    start = insert(start,item); // insert function calling
+                     break;
+            case 2 : item = del(start); // delete function calling
+                     cout<<"The element to deleted is "<<item;
+                     break;
+            case 3 : cout<<"The element in the front is "<<peek(start); //peek function calling
+                     break;
+            case 4 : start = display(start); //display function calling
+                     break;
+            case 5 : exit(1); // exits the program
+                     break ;
+            default : cout<<"Wrong Choice"; //default value
+        }
+    }
+    return 0;
+}
